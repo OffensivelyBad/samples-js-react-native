@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import {
   SafeAreaView,
   Button,
@@ -21,6 +21,7 @@ import {
   TextInput,
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import configFile from './../samples.config';
 
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -35,33 +36,29 @@ export default class LoginScreen extends React.Component {
       progress: false,
     };
     var OktaAuth = require('@okta/okta-auth-js');
-    var config = {
-      url: 'https://{yourOktaDomain}',
-    };
-
-    this.authClient = new OktaAuth(config);
+    this.authClient = new OktaAuth({ url: configFile.oidc.url });
   }
 
   async login() {
     let self = this;
-    this.setState({progress: true});
+    this.setState({ progress: true });
     this.authClient
       .signIn({
         username: this.state.userName,
         password: this.state.password,
       })
-      .then(function(transaction) {
-        self.setState({progress: false});
+      .then(function (transaction) {
+        self.setState({ progress: false });
         if (transaction.status === 'SUCCESS') {
-          const {navigate} = self.props.navigation;
-          navigate('Profile', {transaction: transaction});
+          const { navigate } = self.props.navigation;
+          navigate('Profile', { transaction: transaction });
         } else {
           throw 'We cannot handle the ' + transaction.status + ' status';
         }
       })
-      .fail(function(err) {
+      .fail(function (err) {
         console.error(err);
-        self.setState({progress: false});
+        self.setState({ progress: false });
       });
   }
 
@@ -89,7 +86,7 @@ export default class LoginScreen extends React.Component {
                 secureTextEntry={true}
                 onChangeText={text => (this.state.password = text)}
               />
-              <View style={{marginTop: 40, height: 40}}>
+              <View style={{ marginTop: 40, height: 40 }}>
                 <Button
                   testID="loginButton"
                   onPress={async () => {
@@ -109,7 +106,7 @@ export default class LoginScreen extends React.Component {
 
 const styles = StyleSheet.create({
   spinnerTextStyle: {
-    color: '#FFF'
+    color: '#FFF',
   },
   textInput: {
     marginTop: 10,

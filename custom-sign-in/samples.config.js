@@ -9,14 +9,15 @@
  *
  * See the License for the specific language governing permissions and limitations under the License.
  */
- 
+
 export default {
   oidc: {
-    clientId: '{clientId}',
-    redirectUri: '{redirectUri}',
-    endSessionRedirectUri: '{endSessionRedirectUri}',
-    discoveryUri: 'https://{yourOktaDomain}',
+    url: 'https://{myorg}.okta.com',
+    clientId: 'myclientid',
+    redirectUri: 'http://localhost:3000/index.html',
+    endSessionRedirectUri: 'http://localhost:3000/index.html',
+    discoveryUri: 'https://{myorg}.okta.com',
     scopes: ['openid', 'profile', 'offline_access'],
     requireHardwareBackedKeyStore: false,
-  }
+  },
 };
